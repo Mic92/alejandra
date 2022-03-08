@@ -86,8 +86,6 @@ pub(crate) fn stdin() -> FormattedPath {
     let mut before = String::new();
     let path = "<anonymous file on stdin>".to_string();
 
-    eprintln!("Formatting stdin, run with --help to see all options.");
-
     std::io::stdin().read_to_string(&mut before).unwrap();
 
     let (status, data) =
@@ -405,21 +403,19 @@ pub fn main() -> std::io::Result<()> {
         .count();
 
     if changed > 0 {
-        eprintln!();
-        eprintln!(
-            "Success! {} file{} {} changed",
-            changed,
-            if changed > 0 { "s" } else { "" },
-            if changed > 0 { "were" } else { "was" },
-        );
         if check {
+            eprintln!();
+            eprintln!(
+                "{} file{} {} changed",
+                changed,
+                if changed > 0 { "s" } else { "" },
+                if changed > 0 { "were" } else { "was" },
+            );
             std::process::exit(2);
         } else {
             std::process::exit(0);
         }
     }
 
-    eprintln!();
-    eprintln!("Success! Your code complies the Alejandra style");
     std::process::exit(0);
 }
